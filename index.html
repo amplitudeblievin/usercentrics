@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Usercentrics | Leading in Data Privacy & Compliance</title>
+    <link rel="stylesheet" href="usercentrics.css" />
+    <script src="https://cdn.amplitude.com/script/e3ba67e2674d5fabbdcbd8f2cddcbf2a.js"></script>
+    <script src="https://cdn.amplitude.com/script/e3ba67e2674d5fabbdcbd8f2cddcbf2a.experiment.js"></script>
+    <script src="https://unpkg.com/@amplitude/experiment-js-client@1.15.5/dist/experiment.umd.js"></script>
+    <script>
+      var API_KEY = "e3ba67e2674d5fabbdcbd8f2cddcbf2a";
+      var EXPERIMENT_DEPLOYMENT_KEY = "client-FZXDY7CjmseQr3M4Wjrciuxsz957faW2";
+      var EXPERIMENT_KEY = "template-agent";
+
+      window.amplitude.init(API_KEY, {
+        fetchRemoteConfig: true,
+        autocapture: true
+      });
+      window.amplitude.track("Usercentrics Replica Page Viewed", {
+        page: "Usercentrics Replica",
+        registration_class: 1
+      });
+
+      (function() {
+        if (typeof Experiment === "undefined") return;
+        var experiment = Experiment.initializeWithAmplitudeAnalytics(EXPERIMENT_DEPLOYMENT_KEY);
+        experiment.fetch().then(function() {
+          var variant = experiment.variant(EXPERIMENT_KEY);
+          console.log("Experiment variant:", variant);
+          var cardInfos = document.querySelectorAll(".product-cards .product-card .card-info");
+          cardInfos.forEach(function(el) {
+            el.classList.remove("treatment", "treatment-blue", "treatment-red");
+          });
+          if (variant && variant.key && variant.key !== "control" && variant.payload && variant.payload.color) {
+            var color = String(variant.payload.color).toLowerCase();
+            console.log("Color:", color);
+            var treatmentClass = (color === "red") ? "treatment-red" : "treatment-blue";
+            cardInfos.forEach(function(el) {
+              el.classList.add("treatment", treatmentClass);
+            });
+          }
+          document.body.classList.remove("treatment-button-red", "treatment-button-green");
+          if (variant && variant.key && variant.key !== "control" && variant.payload && variant.payload.color) {
+            var btnColor = String(variant.payload.color).toLowerCase();
+            if (btnColor === "red") {
+              document.body.classList.add("treatment-button-red");
+            } else if (btnColor === "green") {
+              document.body.classList.add("treatment-button-green");
+            }
+          }
+        }).catch(function() {
+          document.querySelectorAll(".product-cards .product-card .card-info").forEach(function(el) {
+            el.classList.remove("treatment", "treatment-blue", "treatment-red");
+          });
+          document.body.classList.remove("treatment-button-red", "treatment-button-green");
+        });
+      })();
+    </script>
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+
+    <div class="top-bar">
+      <div class="top-bar-inner">
+        <span class="top-bar-badge">New</span>
+        <a href="#" class="top-bar-cta">Usercentrics acquires MCP Manager to bring consent and trust to AI. Learn more.</a>
+        <div class="top-bar-actions">
+          <button type="button" class="btn-search" aria-label="Search">Search</button>
+          <a href="#" class="nav-login">Login</a>
+        </div>
+      </div>
+    </div>
+
+    <header class="uc-header">
+      <div class="header-inner">
+        <div class="header-brand">
+          <a href="#" class="logo">Usercentrics</a>
+          <nav class="main-nav">
+            <a href="#">Products</a>
+            <a href="#">Solutions</a>
+            <a href="#">By regulations</a>
+            <a href="#">Pricing</a>
+            <a href="#">Resources</a>
+            <a href="#">Partners</a>
+            <a href="#">Company</a>
+          </nav>
+        </div>
+        <div class="header-actions">
+          <a href="#" class="btn-cta-white">CONTACT SALES</a>
+          <a href="#" class="btn-cta btn-start-free">Start Free</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero">
+        <div class="container hero-container">
+          <div class="hero-inner">
+          <h1 class="hero-title">AUTOMATE PRIVACY COMPLIANCE. DRIVE MARKETING GROWTH.</h1>
+          <p class="hero-subtitle">Automate privacy compliance, enhance audience insights and maximize marketing performance. Our solutions help you turn compliance into a business growth advantage.</p>
+          <div class="hero-ctas">
+            <a href="#" class="btn-primary btn-start-free">Start free</a>
+            <a href="#" class="btn-secondary">Explore Demo</a>
+          </div>
+          <div class="hero-label-row">
+            <p class="hero-label">See our solutions in action</p>
+            <span class="hero-hint">No credit card required</span>
+          </div>
+        </div>
+        <div class="hero-tabs-wrap">
+            <div class="hero-tabs" role="tablist">
+              <button type="button" class="hero-tab active" role="tab" aria-selected="true" data-tab="web-cmp" id="tab-web-cmp">
+                <span class="hero-tab-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span>
+                <span class="hero-tab-label">WEB CMP</span>
+              </button>
+              <button type="button" class="hero-tab" role="tab" aria-selected="false" data-tab="app-cmp" id="tab-app-cmp">
+                <span class="hero-tab-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg></span>
+                <span class="hero-tab-label">APP CMP</span>
+              </button>
+              <button type="button" class="hero-tab" role="tab" aria-selected="false" data-tab="ctv-cmp" id="tab-ctv-cmp">
+                <span class="hero-tab-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="1"/><line x1="6" y1="22" x2="6" y2="18"/><line x1="18" y1="22" x2="18" y2="18"/><line x1="10" y1="22" x2="14" y2="22"/></svg></span>
+                <span class="hero-tab-label">CTV CMP</span>
+              </button>
+              <button type="button" class="hero-tab" role="tab" aria-selected="false" data-tab="privacy-policy" id="tab-privacy-policy">
+                <span class="hero-tab-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+                <span class="hero-tab-label">PRIVACY POLICY</span>
+              </button>
+              <button type="button" class="hero-tab" role="tab" aria-selected="false" data-tab="server-side" id="tab-server-side">
+                <span class="hero-tab-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="1"/><rect x="2" y="14" width="20" height="8" rx="1"/><line x1="6" y1="6" x2="6" y2="6"/><line x1="10" y1="6" x2="10" y2="6"/><line x1="14" y1="6" x2="14" y2="6"/><line x1="6" y1="18" x2="6" y2="18"/><line x1="10" y1="18" x2="10" y2="18"/><line x1="14" y1="18" x2="14" y2="18"/></svg></span>
+                <span class="hero-tab-label">SERVER-SIDE TRACKING</span>
+              </button>
+              <button type="button" class="hero-tab" role="tab" aria-selected="false" data-tab="mcp-manager" id="tab-mcp-manager">
+                <span class="hero-tab-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="18" x2="6" y2="10"/><line x1="12" y1="18" x2="12" y2="4"/><line x1="18" y1="18" x2="18" y2="14"/></svg></span>
+                <span class="hero-tab-label">MCP MANAGER</span>
+              </button>
+              <button type="button" class="hero-tab" role="tab" aria-selected="false" data-tab="preference-manager" id="tab-preference-manager">
+                <span class="hero-tab-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/><line x1="3" y1="3" x2="21" y2="21"/></svg></span>
+                <span class="hero-tab-label">PREFERENCE MANAGER</span>
+              </button>
+            </div>
+            <div class="hero-tab-content">
+              <div class="hero-tab-panel active" id="panel-web-cmp" role="tabpanel" aria-labelledby="tab-web-cmp">
+                <h2 class="hero-tab-panel-title">Usercentrics Web CMP</h2>
+                <p class="hero-tab-panel-desc">A fully customizable, automated consent solution designed for SMBs and growing businesses. Streamline compliance with global privacy laws and ad tech requirements, and transform data privacy into a competitive advantage that builds trust and drives growth.</p>
+                <ul class="hero-tab-panel-list">
+                  <li>Automate compliance by auto-blocking non-essential services with our extensive repository</li>
+                  <li>Customize consent banners to build trust and boost engagement</li>
+                  <li>Use analytics to optimize consented data for smarter marketing</li>
+                </ul>
+                <a href="#" class="hero-tab-panel-cta">LEARN MORE <span aria-hidden="true">→</span></a>
+              </div>
+              <div class="hero-tab-panel" id="panel-app-cmp" role="tabpanel" aria-labelledby="tab-app-cmp" hidden>
+                <h2 class="hero-tab-panel-title">Usercentrics App CMP</h2>
+                <p class="hero-tab-panel-desc">Secure your mobile apps and games monetization by complying with global data privacy regulations and frameworks like the GDPR, CCPA, TCF v2.2, and more.</p>
+                <ul class="hero-tab-panel-list">
+                  <li>Enjoy a seamless user experience with our intuitive interface</li>
+                  <li>Customize your consent banner for a consistent brand experience</li>
+                  <li>Use detailed analytics and A/B testing to reach high consent rates</li>
+                </ul>
+                <a href="#" class="hero-tab-panel-cta">LEARN MORE <span aria-hidden="true">→</span></a>
+              </div>
+              <div class="hero-tab-panel" id="panel-ctv-cmp" role="tabpanel" aria-labelledby="tab-ctv-cmp" hidden>
+                <h2 class="hero-tab-panel-title">Usercentrics CTV CMP</h2>
+                <p class="hero-tab-panel-desc">Comply with global privacy regulations and secure your OTT apps monetization.</p>
+                <ul class="hero-tab-panel-list">
+                  <li>Meet legal and advertising standards with our easy-to-implement solution</li>
+                  <li>Customize your consent banner to match your branding</li>
+                  <li>Provide a smooth user experience with cross-device consent sharing</li>
+                </ul>
+                <a href="#" class="hero-tab-panel-cta">LEARN MORE <span aria-hidden="true">→</span></a>
+              </div>
+              <div class="hero-tab-panel" id="panel-privacy-policy" role="tabpanel" aria-labelledby="tab-privacy-policy" hidden>
+                <h2 class="hero-tab-panel-title">Usercentrics Privacy Policy Generator</h2>
+                <p class="hero-tab-panel-desc">Build your custom privacy policy in minutes with our intelligent generator. Tailored to your website and tech setup and selected services.</p>
+                <ul class="hero-tab-panel-list">
+                  <li>Align with key privacy law requirements, including the GDPR and US state regulations</li>
+                  <li>Easily generate multiple policies for different domains or needs</li>
+                  <li>Offer your policy in English, Dutch, German, and Italian</li>
+                  <li>Stay up to date with legal and technical changes through automated updates</li>
+                </ul>
+                <a href="#" class="hero-tab-panel-cta">LEARN MORE <span aria-hidden="true">→</span></a>
+              </div>
+              <div class="hero-tab-panel" id="panel-server-side" role="tabpanel" aria-labelledby="tab-server-side" hidden>
+                <h2 class="hero-tab-panel-title">Usercentrics Server-Side Tracking</h2>
+                <p class="hero-tab-panel-desc">Improve campaign performance, strengthen your data quality, and reduce costs with Usercentrics Server-Side Tracking.</p>
+                <ul class="hero-tab-panel-list">
+                  <li><strong>Boost Meta performance with Meta Signals Gateway</strong> by sending high-quality web and offline signals.</li>
+                  <li><strong>Power multi-platform tracking with Server-Side Tagging</strong> to enrich, transform, and centralize first-party data for Google, Meta, TikTok, and more.</li>
+                </ul>
+                <a href="#" class="hero-tab-panel-cta">LEARN MORE <span aria-hidden="true">→</span></a>
+              </div>
+              <div class="hero-tab-panel" id="panel-mcp-manager" role="tabpanel" aria-labelledby="tab-mcp-manager" hidden>
+                <h2 class="hero-tab-panel-title">MCP Manager by Usercentrics</h2>
+                <p class="hero-tab-panel-desc">A centralized governance layer for AI systems that access real business and consumer data. Control, monitor, and audit how AI uses data through the Model Context Protocol (MCP).</p>
+                <ul class="hero-tab-panel-list">
+                  <li>Govern AI data access and gain end-to-end visibility with audit logs</li>
+                  <li>Reduce security risks, AI access to PII, and overall token use</li>
+                  <li>Enable compliant and cost-efficient AI adoption without AI expertise</li>
+                </ul>
+                <a href="#" class="hero-tab-panel-cta">LEARN MORE <span aria-hidden="true">→</span></a>
+              </div>
+              <div class="hero-tab-panel" id="panel-preference-manager" role="tabpanel" aria-labelledby="tab-preference-manager" hidden>
+                <h2 class="hero-tab-panel-title">Usercentrics Preference Manager</h2>
+                <p class="hero-tab-panel-desc">Use a Preference Management Platform (PMP) to increase marketing ROI. Pass consent and preferences for zero- and first-party data directly to your preferred advertising platform and marketing tech stack.</p>
+                <ul class="hero-tab-panel-list">
+                  <li>Optimize retargeting and personalization campaigns with our easy and flexible implementation</li>
+                  <li>Customize widgets and Preference Center to match your branding</li>
+                  <li>Centralize users' consent and preference choices in a single platform</li>
+                  <li>Achieve compliance with advertising platform policies</li>
+                </ul>
+                <a href="#" class="hero-tab-panel-cta">LEARN MORE <span aria-hidden="true">→</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="scanner-cta">
+        <div class="container">
+          <h2 class="scanner-title">Check your website or app for privacy compliance</h2>
+          <p class="scanner-desc">Do you wonder if your website or app is privacy-compliant? Check it now in minutes with our free scanner.</p>
+          <div class="scanner-form">
+            <input type="url" placeholder="Your website or app URL" class="scanner-input" />
+            <button type="button" class="btn-primary">Start scan</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="industries">
+        <div class="container">
+          <h2 class="section-title">Find solutions for your industry</h2>
+          <div class="industries-grid">
+            <a href="#" class="industry-card">
+              <h3>Media & Publishing</h3>
+              <p>In a digital world, readers expect more than just great content — they demand transparency and control over their data. Grow trust, loyalty, and revenue with privacy-first engagement.</p>
+            </a>
+            <a href="#" class="industry-card">
+              <h3>Retail & Ecommerce</h3>
+              <p>Delivering tailored experiences while respecting user privacy isn't just good business; it's essential in today's ecommerce. Build trust and loyalty while meeting complex compliance standards.</p>
+            </a>
+            <a href="#" class="industry-card">
+              <h3>Banking & Finance & Insurance</h3>
+              <p>Trust drives financial services, and clients today expect full transparency. Our consent-based solutions enable regulatory compliance and help you build long-term client relationships.</p>
+            </a>
+            <a href="#" class="industry-card">
+              <h3>Healthcare & Pharmaceuticals</h3>
+              <p>In healthcare, protecting patient data isn't optional — it's critical. Safeguard sensitive information, enable compliance, and strengthen trust with centralized privacy management.</p>
+            </a>
+            <a href="#" class="industry-card">
+              <h3>Gaming</h3>
+              <p>Building trust with players is essential for high engagement and monetization. A transparent consent solution protects ad revenue and gives players true choice over their data usage.</p>
+            </a>
+            <a href="#" class="industry-card">
+              <h3>Education</h3>
+              <p>Enable compliance with evolving regulations while giving students and families clear choices over how their data is used. Build trust through transparent, user-friendly consent solutions.</p>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="testimonials">
+        <div class="container">
+          <h2 class="section-title">What our customers say</h2>
+          <div class="testimonials-grid">
+            <blockquote class="testimonial-card">
+              <p class="testimonial-quote">We saw huge improvements in Core Web Vitals KPIs, especially for mobile and tablet.</p>
+              <footer>
+                <strong>Lars Brenncke</strong>
+                <span>Lead Business Analyst, Scout24</span>
+              </footer>
+              <a href="#" class="testimonial-link">Read case study</a>
+            </blockquote>
+            <blockquote class="testimonial-card">
+              <p class="testimonial-quote">Honestly, it was click, click, click, done.</p>
+              <footer>
+                <strong>Kathryn Fletcher</strong>
+                <span>Web Application Development Manager, Gilson Inc.</span>
+              </footer>
+              <a href="#" class="testimonial-link">more</a>
+            </blockquote>
+            <blockquote class="testimonial-card">
+              <p class="testimonial-quote">We decided to go with Usercentrics because it is easy to integrate and it works great with our Google Tag Manager setup. Besides that, PageSpeed and website performance are very important to us. Usercentrics handles this topic very well.</p>
+              <footer>
+                <strong>Marius Rudolph</strong>
+                <span>Head of Product, SAG Digital</span>
+              </footer>
+              <a href="#" class="testimonial-link">more</a>
+            </blockquote>
+          </div>
+        </div>
+      </section>
+
+      <section class="stats">
+        <div class="container">
+          <div class="stats-grid">
+            <div class="stat-item">
+              <span class="stat-value">2.4 M</span>
+              <span class="stat-label">websites and apps in 195 countries</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">8.8 B</span>
+              <span class="stat-label">monthly consents</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">99 %+</span>
+              <span class="stat-label">customer retention rate</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">4.3 /5</span>
+              <span class="stat-label">rating on G2</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="resources">
+        <div class="container">
+          <h2 class="section-title">Learn how to thrive with Privacy-Led Marketing</h2>
+          <p class="resources-intro">Want to thrive with Privacy-Led Marketing and drive your business growth? Explore our insightful blog articles, privacy compliance checklists, online courses, live and on-demand webinars, podcasts, and much more.</p>
+          <a href="#" class="btn-secondary">Explore</a>
+        </div>
+      </section>
+
+      <section class="pricing-cta">
+        <div class="container">
+          <h2 class="section-title">Explore options and prices</h2>
+          <p class="pricing-desc">Explore our pricing plans and find one that matches your business size and needs. Have questions? Our expert team is ready to assist and demonstrate our solutions.</p>
+          <div class="pricing-actions">
+            <a href="#" class="btn-outline">Contact sales</a>
+            <a href="#" class="btn-primary">CHECK PRICING</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="uc-footer">
+      <div class="container footer-inner">
+        <div class="footer-grid">
+          <div class="footer-col">
+            <h4>Products</h4>
+            <a href="#">Usercentrics Web CMP</a>
+            <a href="#">Usercentrics App CMP</a>
+            <a href="#">Usercentrics CTV CMP</a>
+            <a href="#">Usercentrics Privacy Policy Generator</a>
+            <a href="#">Server-side Tagging Solution</a>
+            <a href="#">Usercentrics Preference Manager</a>
+          </div>
+          <div class="footer-col">
+            <h4>Solutions</h4>
+            <a href="#">Data Privacy Regulatory Compliance</a>
+            <a href="#">Marketing Performance Optimization</a>
+            <a href="#">Migration</a>
+          </div>
+          <div class="footer-col">
+            <h4>Regulations</h4>
+            <a href="#">DMA (EU)</a>
+            <a href="#">GDPR (EU)</a>
+            <a href="#">CCPA (California)</a>
+            <a href="#">VCDPA (Virginia)</a>
+          </div>
+          <div class="footer-col">
+            <h4>Company</h4>
+            <a href="#">About us</a>
+            <a href="#">Press</a>
+            <a href="#">Our offices</a>
+            <a href="#">Trust center</a>
+            <a href="#">Careers</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p class="footer-copy">© Copyright 2026 Usercentrics GmbH</p>
+          <div class="footer-legal">
+            <a href="#">Terms & Conditions</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Legal Notice</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      (function() {
+        var tabs = document.querySelectorAll(".hero-tabs .hero-tab");
+        var panels = document.querySelectorAll(".hero-tab-panel");
+        tabs.forEach(function(tab) {
+          tab.addEventListener("click", function() {
+            var tabId = this.getAttribute("data-tab");
+            tabs.forEach(function(t) {
+              t.classList.remove("active");
+              t.setAttribute("aria-selected", "false");
+            });
+            panels.forEach(function(panel) {
+              panel.classList.remove("active");
+              panel.hidden = true;
+            });
+            this.classList.add("active");
+            this.setAttribute("aria-selected", "true");
+            var panel = document.getElementById("panel-" + tabId);
+            if (panel) {
+              panel.classList.add("active");
+              panel.hidden = false;
+            }
+          });
+        });
+      })();
+      document.querySelectorAll(".card-link").forEach(function(link) {
+        link.addEventListener("click", function(e) {
+          if (window.amplitude && window.amplitude.track) {
+            window.amplitude.track("Usercentrics CTA Clicked", {
+              cta: "Learn More",
+              product: this.closest(".product-card") ? this.closest(".product-card").querySelector(".card-title").textContent : ""
+            });
+          }
+        });
+      });
+      document.querySelectorAll(".btn-primary").forEach(function(btn) {
+        btn.addEventListener("click", function() {
+          if (window.amplitude && window.amplitude.track) {
+            window.amplitude.track("Usercentrics Primary CTA Clicked", { label: this.textContent.trim() });
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
