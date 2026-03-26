@@ -6,6 +6,7 @@
     <title>Usercentrics | Leading in Data Privacy & Compliance</title>
     <link rel="stylesheet" href="usercentrics.css" />
     <script src="https://cdn.amplitude.com/script/e3ba67e2674d5fabbdcbd8f2cddcbf2a.js"></script>
+    <script src="https://cdn.amplitude.com/script/e3ba67e2674d5fabbdcbd8f2cddcbf2a.engagement.js"></script>
     <script src="https://cdn.amplitude.com/script/e3ba67e2674d5fabbdcbd8f2cddcbf2a.experiment.js"></script>
     <script src="https://unpkg.com/@amplitude/experiment-js-client@1.15.5/dist/experiment.umd.js"></script>
     <script>
@@ -13,49 +14,12 @@
       var EXPERIMENT_DEPLOYMENT_KEY = "client-FZXDY7CjmseQr3M4Wjrciuxsz957faW2";
       var EXPERIMENT_KEY = "template-agent";
 
+      if (window.amplitude && window.engagement) {
+        window.amplitude.add(window.engagement.plugin());
+      }
       window.amplitude.init(API_KEY, {
-        fetchRemoteConfig: true,
-        autocapture: true
+        autocapture: { elementInteractions: false }
       });
-      window.amplitude.track("Usercentrics Replica Page Viewed", {
-        page: "Usercentrics Replica",
-        registration_class: 1
-      });
-
-      (function() {
-        if (typeof Experiment === "undefined") return;
-        var experiment = Experiment.initializeWithAmplitudeAnalytics(EXPERIMENT_DEPLOYMENT_KEY);
-        experiment.fetch().then(function() {
-          var variant = experiment.variant(EXPERIMENT_KEY);
-          console.log("Experiment variant:", variant);
-          var cardInfos = document.querySelectorAll(".product-cards .product-card .card-info");
-          cardInfos.forEach(function(el) {
-            el.classList.remove("treatment", "treatment-blue", "treatment-red");
-          });
-          if (variant && variant.key && variant.key !== "control" && variant.payload && variant.payload.color) {
-            var color = String(variant.payload.color).toLowerCase();
-            console.log("Color:", color);
-            var treatmentClass = (color === "red") ? "treatment-red" : "treatment-blue";
-            cardInfos.forEach(function(el) {
-              el.classList.add("treatment", treatmentClass);
-            });
-          }
-          document.body.classList.remove("treatment-button-red", "treatment-button-green");
-          if (variant && variant.key && variant.key !== "control" && variant.payload && variant.payload.color) {
-            var btnColor = String(variant.payload.color).toLowerCase();
-            if (btnColor === "red") {
-              document.body.classList.add("treatment-button-red");
-            } else if (btnColor === "green") {
-              document.body.classList.add("treatment-button-green");
-            }
-          }
-        }).catch(function() {
-          document.querySelectorAll(".product-cards .product-card .card-info").forEach(function(el) {
-            el.classList.remove("treatment", "treatment-blue", "treatment-red");
-          });
-          document.body.classList.remove("treatment-button-red", "treatment-button-green");
-        });
-      })();
     </script>
   </head>
   <body>
@@ -100,8 +64,7 @@
           <h1 class="hero-title">AUTOMATE PRIVACY COMPLIANCE. DRIVE MARKETING GROWTH.</h1>
           <p class="hero-subtitle">Automate privacy compliance, enhance audience insights and maximize marketing performance. Our solutions help you turn compliance into a business growth advantage.</p>
           <div class="hero-ctas">
-            <a href="#" class="btn-primary btn-start-free">Start free</a>
-            <a href="#" class="btn-secondary">Explore Demo</a>
+            <button href="#" class="btn-primary btn-start-free">Start free</a>
           </div>
           <div class="hero-label-row">
             <p class="hero-label">See our solutions in action</p>
@@ -404,23 +367,44 @@
           });
         });
       })();
-      document.querySelectorAll(".card-link").forEach(function(link) {
-        link.addEventListener("click", function(e) {
-          if (window.amplitude && window.amplitude.track) {
-            window.amplitude.track("Usercentrics CTA Clicked", {
-              cta: "Learn More",
-              product: this.closest(".product-card") ? this.closest(".product-card").querySelector(".card-title").textContent : ""
-            });
+
+      (function() {
+        if (typeof window.amplitude === "undefined" || !window.amplitude.track) return;
+
+        function getLabel(el) {
+          var label = el.getAttribute("aria-label") || el.innerText || el.textContent || "";
+          label = label.replace(/\s+/g, " ").trim();
+          if (el.classList.contains("hero-tab-panel-cta")) {
+            var panel = el.closest(".hero-tab-panel");
+            var titleEl = panel && panel.querySelector(".hero-tab-panel-title");
+            if (titleEl) label = "Learn More - " + titleEl.textContent.trim();
+          } else if (el.classList.contains("industry-card")) {
+            var h3 = el.querySelector("h3");
+            if (h3) label = h3.textContent.trim();
           }
-        });
-      });
-      document.querySelectorAll(".btn-primary").forEach(function(btn) {
-        btn.addEventListener("click", function() {
-          if (window.amplitude && window.amplitude.track) {
-            window.amplitude.track("Usercentrics Primary CTA Clicked", { label: this.textContent.trim() });
+          return label;
+        }
+
+        function toEventName(label) {
+          if (!label) return "CTA Clicked";
+          var words = label.toLowerCase().split(/\s+/);
+          for (var i = 0; i < words.length; i++) {
+            words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
           }
+          return words.join(" ") + " Clicked";
+        }
+
+        var trackedSelectors = "button, a[href], .btn-primary, .btn-secondary, .btn-cta, .btn-cta-white, .btn-outline, .hero-tab-panel-cta, .industry-card, .testimonial-link, .top-bar-cta, .nav-login, .logo, .main-nav a, .footer-col a, .footer-legal a";
+
+        document.addEventListener("click", function(e) {
+          var el = e.target.closest(trackedSelectors);
+          if (!el || el.getAttribute("href") === "#main") return;
+          var label = getLabel(el);
+          if (!label) return;
+          var eventName = toEventName(label);
+          window.amplitude.track(eventName, { cta_label: label });
         });
-      });
+      })();
     </script>
   </body>
 </html>
